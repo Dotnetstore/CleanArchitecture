@@ -3,22 +3,25 @@ using Application.Extensions;
 using Asp.Versioning;
 using Domain;
 using Infrastructure;
+using Infrastructure.Contexts;
 using Infrastructure.Extensions;
 using Microsoft.Extensions.Options;
 using Presentation.Swagger;
+using Serilog;
+using Serilog.Core;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Presentation.Extensions;
 
 internal static class SetupApplicationExtensions
 {
-    internal static WebApplicationBuilder AddServices(this WebApplicationBuilder builder)
+    internal static WebApplicationBuilder AddServices(this WebApplicationBuilder builder, Logger logger)
     {
         builder
             .Services
             .AddApplication()
             .AddInfrastructure()
-            .AddPresentation()
+            .AddPresentation(builder, logger)
             .AddMediator()
             .AddVersioning()
             .AddSwaggerService()
@@ -27,6 +30,25 @@ internal static class SetupApplicationExtensions
             .AddControllers();
 
         return builder;
+    }
+
+    internal static WebApplicationBuilder AddLogger(this WebApplicationBuilder builder, Logger logger)
+    {
+        builder.Logging.ClearProviders();
+        
+        builder.Logging.AddSerilog(logger);
+
+        return builder;
+    }
+
+    internal static WebApplication LoadDb(this WebApplication app)
+    {
+        var scope = app.Services.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDataContext>();
+        context.Database.EnsureDeleted();
+        context.Database.EnsureCreated();
+
+        return app;
     }
 
     private static IServiceCollection AddMediator(this IServiceCollection serviceCollection)
