@@ -31,9 +31,9 @@ public class UnitOfWork : IUnitOfWork
         return (IGenericRepository<T>) _repositories[type]!;
     }
     
-    async Task<int> IUnitOfWork.SaveAsync(CancellationToken cancellationToken)
+    async Task IUnitOfWork.SaveAsync(CancellationToken cancellationToken)
     {
-        return await _context.SaveChangesAsync(cancellationToken);
+        await _context.CommitChangesAsync(cancellationToken);
     }
 
     void IUnitOfWork.Rollback()

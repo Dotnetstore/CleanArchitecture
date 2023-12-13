@@ -16,6 +16,7 @@ await builder
     .BuildApplication()
     .LoadDb()
     .AddSwagger()
+    .AddMiddleware()
     .AddApplicationServices()
     .RunAppAsync();
 return;

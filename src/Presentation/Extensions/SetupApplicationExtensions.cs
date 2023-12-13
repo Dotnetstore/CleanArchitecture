@@ -6,6 +6,7 @@ using Domain;
 using Infrastructure;
 using Infrastructure.Contexts;
 using Infrastructure.Extensions;
+using Infrastructure.Middlewares;
 using Microsoft.Extensions.Options;
 using Presentation.Swagger;
 using Serilog;
@@ -107,6 +108,13 @@ internal static class SetupApplicationExtensions
                 }
             });
         }
+
+        return app;
+    }
+
+    internal static WebApplication AddMiddleware(this WebApplication app)
+    {
+        app.UseMiddleware<EventualConsistencyMiddleware>();
 
         return app;
     }

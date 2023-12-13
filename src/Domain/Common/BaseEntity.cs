@@ -10,7 +10,7 @@ public abstract class BaseEntity : IEntity
     public Guid Id { get; set; }
         
     [NotMapped]
-    public IReadOnlyCollection<BaseEvent> DomainEvents => _domainEvents.AsReadOnly();
+    public List<BaseEvent> DomainEvents => _domainEvents;
 
     public void AddDomainEvent(BaseEvent domainEvent) => _domainEvents.Add(domainEvent);
     
