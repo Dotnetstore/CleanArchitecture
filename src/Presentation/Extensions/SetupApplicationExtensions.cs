@@ -1,4 +1,5 @@
 ﻿using Application;
+using Application.Common.Behaviors;
 using Application.Extensions;
 using Asp.Versioning;
 using Domain;
@@ -53,10 +54,14 @@ internal static class SetupApplicationExtensions
 
     private static IServiceCollection AddMediator(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddMediatR(q => q.RegisterServicesFromAssemblies(
-            typeof(IDomainAssemblyMarker).Assembly, 
-            typeof(IApplicationAssemblyMarker).Assembly, 
-            typeof(IInfrastructureAssemblyMarker).Assembly));
+        serviceCollection.AddMediatR(q =>
+        {
+            q.RegisterServicesFromAssemblies(
+                typeof(IDomainAssemblyMarker).Assembly,
+                typeof(IApplicationAssemblyMarker).Assembly,
+                typeof(IInfrastructureAssemblyMarker).Assembly);
+            q.AddOpenBehavior(typeof(ValidationBehavior<,>));
+        });
 
         return serviceCollection;
     }
