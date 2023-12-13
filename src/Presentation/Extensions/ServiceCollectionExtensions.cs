@@ -21,6 +21,8 @@ internal static class ServiceCollectionExtensions
                 .EnableSensitiveDataLogging()
                 .UseLoggerFactory(loggerFactory);
         });
+
+        serviceCollection.AddHttpContextAccessor();
         
         return serviceCollection;
     }
