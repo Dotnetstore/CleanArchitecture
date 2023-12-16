@@ -9,7 +9,7 @@ public class MatchAsyncTests
     private record Person(string Name);
 
     [Fact]
-    public async Task MatchAsyncErrorOr_WhenHasValue_ShouldExecuteOnValueAction()
+    public async Task MatchAsyncResult_WhenHasValue_ShouldExecuteOnValueAction()
     {
         Result<Person> resultPerson = new Person("Hans");
         Task<string> OnValueAction(Person person)
@@ -28,7 +28,7 @@ public class MatchAsyncTests
     }
 
     [Fact]
-    public async Task MatchAsyncErrorOr_WhenHasError_ShouldExecuteOnErrorAction()
+    public async Task MatchAsyncResult_WhenHasError_ShouldExecuteOnErrorAction()
     {
         Result<Person> resultPerson = new List<Error> { Error.Validation(), Error.Conflict() };
         Task<string> OnValueAction(Person _) => throw new Exception("Should not be called");
@@ -47,7 +47,7 @@ public class MatchAsyncTests
     }
 
     [Fact]
-    public async Task MatchFirstAsyncErrorOr_WhenHasValue_ShouldExecuteOnValueAction()
+    public async Task MatchFirstAsyncResult_WhenHasValue_ShouldExecuteOnValueAction()
     {
         Result<Person> resultPerson = new Person("Hans");
         Task<string> OnValueAction(Person person)
@@ -66,7 +66,7 @@ public class MatchAsyncTests
     }
 
     [Fact]
-    public async Task MatchFirstAsyncErrorOr_WhenHasError_ShouldExecuteOnFirstErrorAction()
+    public async Task MatchFirstAsyncResult_WhenHasError_ShouldExecuteOnFirstErrorAction()
     {
         Result<Person> resultPerson = new List<Error> { Error.Validation(), Error.Conflict() };
         Task<string> OnValueAction(Person _) => throw new Exception("Should not be called");
