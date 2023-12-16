@@ -21,4 +21,6 @@ public abstract class BaseAuditableEntity : BaseEntity, IBaseAuditableEntity
     public bool IsSystem { get; init; }
 
     public bool IsGdpr { get; init; }
+
+    public byte[] ConcurrencyToken { get; init; } = null!;
 }

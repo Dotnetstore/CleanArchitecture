@@ -44,5 +44,9 @@ public class BaseAuditableEntityEntityTypeConfiguration<T> : BaseEntityEntityTyp
         builder
             .Property(q => q.IsGdpr)
             .IsRequired();
+
+        builder
+            .Property(q => q.ConcurrencyToken)
+            .IsRowVersion();
     }
 }
