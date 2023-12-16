@@ -20,8 +20,6 @@ await builder
     .AddMiddleware()
     .AddApplicationServices()
     .RunAppAsync();
-return;
-
 
 static string GetCurrentUserName()
 {

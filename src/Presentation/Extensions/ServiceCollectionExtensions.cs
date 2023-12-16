@@ -20,7 +20,9 @@ internal static class ServiceCollectionExtensions
             q.UseSqlServer(connectionString)
                 .EnableSensitiveDataLogging()
                 .UseLoggerFactory(loggerFactory);
-        });
+        },
+            ServiceLifetime.Scoped,
+            ServiceLifetime.Singleton);
 
         serviceCollection.AddHttpContextAccessor();
         
