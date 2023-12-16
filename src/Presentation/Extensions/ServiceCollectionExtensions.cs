@@ -16,11 +16,16 @@ internal static class ServiceCollectionExtensions
         
         var connectionString = builder.Configuration.GetSection("ConnectionStrings:MainConnectionString").Value;
         serviceCollection.AddDbContext<ApplicationDataContext>(q =>
-        {
-            q.UseSqlServer(connectionString)
-                .EnableSensitiveDataLogging()
-                .UseLoggerFactory(loggerFactory);
-        },
+            {
+                q.UseSqlServer(connectionString, q =>
+                    {
+                        q.MaxBatchSize(50);
+                        q.EnableRetryOnFailure();
+                        q.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                    })
+                    .EnableSensitiveDataLogging()
+                    .UseLoggerFactory(loggerFactory);
+            },
             ServiceLifetime.Scoped,
             ServiceLifetime.Singleton);
 
