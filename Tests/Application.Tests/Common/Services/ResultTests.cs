@@ -1,7 +1,4 @@
-﻿using Application.Common.Services;
-using Domain.Enums;
-using Domain.Models;
-using FluentAssertions;
+﻿using Domain.Enums;
 
 namespace Application.Tests.Common.Services;
 

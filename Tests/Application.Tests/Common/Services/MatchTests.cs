@@ -1,8 +1,4 @@
-﻿using Application.Common.Services;
-using Domain.Models;
-using FluentAssertions;
-
-namespace Application.Tests.Common.Services;
+﻿namespace Application.Tests.Common.Services;
 
 public class MatchTests
 {
