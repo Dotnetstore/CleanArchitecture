@@ -1,14 +1,9 @@
 using Presentation.Extensions;
-using Serilog;
+using Presentation.Factories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
-    .Enrich.FromLogContext()
-    .Enrich.WithMachineName()
-    .Enrich.WithProperty("Username", GetCurrentUserName())
-    .CreateLogger();
+var logger = builder.CreateLogger();
 
 await builder
     .AddServices(logger)
@@ -20,8 +15,3 @@ await builder
     .AddMiddleware()
     .AddApplicationServices()
     .RunAppAsync();
-
-static string GetCurrentUserName()
-{
-    return "TestUser";
-}

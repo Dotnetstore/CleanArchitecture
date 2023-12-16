@@ -11,14 +11,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Presentation.Swagger;
 using Serilog;
-using Serilog.Core;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using ILogger = Serilog.ILogger;
 
 namespace Presentation.Extensions;
 
 internal static class SetupApplicationExtensions
 {
-    internal static WebApplicationBuilder AddServices(this WebApplicationBuilder builder, Logger logger)
+    internal static WebApplicationBuilder AddServices(this WebApplicationBuilder builder, ILogger logger)
     {
         builder
             .Services
@@ -35,7 +35,7 @@ internal static class SetupApplicationExtensions
         return builder;
     }
 
-    internal static WebApplicationBuilder AddLogger(this WebApplicationBuilder builder, Logger logger)
+    internal static WebApplicationBuilder AddLogger(this WebApplicationBuilder builder, ILogger logger)
     {
         builder.Logging.ClearProviders();
         

@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
-using Serilog.Core;
 using Serilog.Extensions.Logging;
+using ILogger = Serilog.ILogger;
 
 namespace Presentation.Extensions;
 
@@ -10,7 +10,7 @@ internal static class ServiceCollectionExtensions
     internal static IServiceCollection AddPresentation(
         this IServiceCollection serviceCollection, 
         WebApplicationBuilder builder,
-        Logger logger)
+        ILogger logger)
     {
         var loggerFactory = new SerilogLoggerFactory(logger);
         
