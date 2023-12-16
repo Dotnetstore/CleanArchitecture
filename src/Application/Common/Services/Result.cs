@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using Domain.Models;
 
 namespace Application.Common.Services;
 

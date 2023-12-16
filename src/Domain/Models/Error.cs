@@ -1,4 +1,6 @@
-﻿namespace Application.Common.Services;
+﻿using Domain.Enums;
+
+namespace Domain.Models;
 
 /// <summary>
 /// Represents an error.

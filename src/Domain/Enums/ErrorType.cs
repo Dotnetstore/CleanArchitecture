@@ -1,4 +1,4 @@
-﻿namespace Application.Common.Services;
+﻿namespace Domain.Enums;
 
 /// <summary>
 /// Error types.
