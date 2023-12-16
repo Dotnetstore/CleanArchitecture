@@ -15,6 +15,7 @@ await builder
     .AddLogger(logger)
     .BuildApplication()
     .LoadDb()
+    .CheckIfDatabaseIsUpdated()
     .AddSwagger()
     .AddMiddleware()
     .AddApplicationServices()

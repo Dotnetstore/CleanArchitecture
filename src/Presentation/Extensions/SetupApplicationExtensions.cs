@@ -7,6 +7,7 @@ using Infrastructure;
 using Infrastructure.Contexts;
 using Infrastructure.Extensions;
 using Infrastructure.Middlewares;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Presentation.Swagger;
 using Serilog;
@@ -108,6 +109,17 @@ internal static class SetupApplicationExtensions
                 }
             });
         }
+
+        return app;
+    }
+
+    internal static WebApplication CheckIfDatabaseIsUpdated(this WebApplication app)
+    {
+        using var scope = app.Services.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDataContext>();
+        var pendingMigrations = context.Database.GetPendingMigrations();
+        if (pendingMigrations.Any())
+            throw new Exception("Database is not fully migrated for MoviesContext.");
 
         return app;
     }
