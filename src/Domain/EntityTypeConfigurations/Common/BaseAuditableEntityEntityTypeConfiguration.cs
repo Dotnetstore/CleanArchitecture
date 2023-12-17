@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Domain.EntityTypeConfigurations.Common;
 
-public class BaseAuditableEntityEntityTypeConfiguration<T> : BaseEntityEntityTypeConfiguration<T> where T : BaseAuditableEntity
+public abstract class BaseAuditableEntityEntityTypeConfiguration<T> : BaseEntityEntityTypeConfiguration<T> where T : BaseAuditableEntity
 {
     public override void Configure(EntityTypeBuilder<T> builder)
     {
