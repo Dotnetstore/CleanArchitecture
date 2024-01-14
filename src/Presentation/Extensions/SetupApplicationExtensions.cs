@@ -7,7 +7,6 @@ using HealthChecks.UI.Client;
 using Infrastructure;
 using Infrastructure.Contexts;
 using Infrastructure.Extensions;
-using Infrastructure.Middlewares;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -128,8 +127,6 @@ internal static class SetupApplicationExtensions
 
     internal static WebApplication AddMiddleware(this WebApplication app)
     {
-        app.UseMiddleware<EventualConsistencyMiddleware>();
-
         return app;
     }
 
