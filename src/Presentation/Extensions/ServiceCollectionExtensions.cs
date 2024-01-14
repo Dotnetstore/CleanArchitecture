@@ -30,6 +30,7 @@ internal static class ServiceCollectionExtensions
             ServiceLifetime.Singleton);
 
         serviceCollection.AddHttpContextAccessor();
+        serviceCollection.AddHealthChecks();
         
         return serviceCollection;
     }

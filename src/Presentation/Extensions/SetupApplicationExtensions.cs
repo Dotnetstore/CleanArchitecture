@@ -3,10 +3,12 @@ using Application.Common.Behaviors;
 using Application.Extensions;
 using Asp.Versioning;
 using Domain;
+using HealthChecks.UI.Client;
 using Infrastructure;
 using Infrastructure.Contexts;
 using Infrastructure.Extensions;
 using Infrastructure.Middlewares;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Presentation.Swagger;
@@ -134,6 +136,10 @@ internal static class SetupApplicationExtensions
     internal static WebApplication AddApplicationServices(this WebApplication app)
     {
         app.UseHttpsRedirection();
+        app.MapHealthChecks("/healthz", new HealthCheckOptions
+        {
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+        });
 
         return app;
     }
