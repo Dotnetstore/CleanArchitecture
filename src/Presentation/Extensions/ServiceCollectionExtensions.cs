@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Presentation.Exceptions;
 using Serilog.Extensions.Logging;
 using ILogger = Serilog.ILogger;
 
@@ -29,6 +30,7 @@ internal static class ServiceCollectionExtensions
             ServiceLifetime.Scoped,
             ServiceLifetime.Singleton);
 
+        serviceCollection.AddExceptionHandler<AppExceptionHandler>();
         serviceCollection.AddHttpContextAccessor();
         serviceCollection.AddHealthChecks();
         

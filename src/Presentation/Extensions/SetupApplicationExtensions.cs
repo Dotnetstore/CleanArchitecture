@@ -127,6 +127,8 @@ internal static class SetupApplicationExtensions
 
     internal static WebApplication AddMiddleware(this WebApplication app)
     {
+        app.UseExceptionHandler(_ => { });
+        
         return app;
     }
 
