@@ -16,13 +16,13 @@
       <PackageReference Include="FluentValidation" Version="11.9.0" />
       <PackageReference Include="MediatR" Version="12.2.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
-      <PackageReference Include="StronglyTypedId" Version="0.2.1" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Entities\" />
       <Folder Include="Errors\" />
       <Folder Include="Exceptions\" />
+      <Folder Include="Extensions\" />
       <Folder Include="Resources\" />
     </ItemGroup>
 

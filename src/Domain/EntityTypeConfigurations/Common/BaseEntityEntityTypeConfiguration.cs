@@ -8,11 +8,5 @@ public class BaseEntityEntityTypeConfiguration<T> : IEntityTypeConfiguration<T> 
 {
     public virtual void Configure(EntityTypeBuilder<T> builder)
     {
-        builder
-            .HasKey(q => q.Id);
-        
-        builder
-            .Property(q => q.Id)
-            .ValueGeneratedNever();
     }
 }
