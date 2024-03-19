@@ -16,13 +16,16 @@ internal static class ServiceCollectionExtensions
         var loggerFactory = new SerilogLoggerFactory(logger);
         
         var connectionString = builder.Configuration.GetSection("ConnectionStrings:MainConnectionString").Value;
+        
+        ArgumentException.ThrowIfNullOrEmpty(connectionString);
+        
         serviceCollection.AddDbContext<ApplicationDataContext>(q =>
             {
-                q.UseSqlServer(connectionString, q =>
+                q.UseSqlServer(connectionString, qq =>
                     {
-                        q.MaxBatchSize(50);
-                        q.EnableRetryOnFailure();
-                        q.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                        qq.MaxBatchSize(50);
+                        qq.EnableRetryOnFailure();
+                        qq.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
                     })
                     .EnableSensitiveDataLogging()
                     .UseLoggerFactory(loggerFactory);

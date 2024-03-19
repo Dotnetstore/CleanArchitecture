@@ -11,19 +11,19 @@ public class ResultTests
     {
         IEnumerable<string> value = new[] { "value" };
 
-        var errorOrPerson = ErrorOrFactory.From(value);
+        var resultPerson = ErrorOrFactory.From(value);
 
-        errorOrPerson.IsError.Should().BeFalse();
-        errorOrPerson.Value.Should().BeSameAs(value);
+        resultPerson.IsError.Should().BeFalse();
+        resultPerson.Value.Should().BeSameAs(value);
     }
 
     [Fact]
     public void CreateFromFactory_WhenAccessingErrors_ShouldReturnUnexpectedError()
     {
         IEnumerable<string> value = new[] { "value" };
-        var errorOrPerson = ErrorOrFactory.From(value);
+        var resultPerson = ErrorOrFactory.From(value);
 
-        var errors = errorOrPerson.Errors;
+        var errors = resultPerson.Errors;
 
         errors.Should().ContainSingle().Which.Type.Should().Be(ErrorType.Unexpected);
     }
@@ -32,9 +32,9 @@ public class ResultTests
     public void CreateFromFactory_WhenAccessingErrorsOrEmptyList_ShouldReturnEmptyList()
     {
         IEnumerable<string> value = new[] { "value" };
-        var errorOrPerson = ErrorOrFactory.From(value);
+        var resultPerson = ErrorOrFactory.From(value);
 
-        var errors = errorOrPerson.ErrorsOrEmptyList;
+        var errors = resultPerson.ErrorsOrEmptyList;
 
         errors.Should().BeEmpty();
     }
@@ -43,9 +43,9 @@ public class ResultTests
     public void CreateFromFactory_WhenAccessingFirstError_ShouldReturnUnexpectedError()
     {
         IEnumerable<string> value = new[] { "value" };
-        var errorOrPerson = ErrorOrFactory.From(value);
+        var resultPerson = ErrorOrFactory.From(value);
 
-        var firstError = errorOrPerson.FirstError;
+        var firstError = resultPerson.FirstError;
 
         firstError.Type.Should().Be(ErrorType.Unexpected);
     }
@@ -55,19 +55,19 @@ public class ResultTests
     {
         IEnumerable<string> value = new[] { "value" };
 
-        var errorOrPerson = Result.From(value);
+        var resultPerson = Result.From(value);
 
-        errorOrPerson.IsError.Should().BeFalse();
-        errorOrPerson.Value.Should().BeSameAs(value);
+        resultPerson.IsError.Should().BeFalse();
+        resultPerson.Value.Should().BeSameAs(value);
     }
 
     [Fact]
     public void CreateFromValue_WhenAccessingErrors_ShouldReturnUnexpectedError()
     {
         IEnumerable<string> value = new[] { "value" };
-        var errorOrPerson = Result.From(value);
+        var resultPerson = Result.From(value);
 
-        var errors = errorOrPerson.Errors;
+        var errors = resultPerson.Errors;
 
         errors.Should().ContainSingle().Which.Type.Should().Be(ErrorType.Unexpected);
     }
@@ -76,9 +76,9 @@ public class ResultTests
     public void CreateFromValue_WhenAccessingErrorsOrEmptyList_ShouldReturnEmptyList()
     {
         IEnumerable<string> value = new[] { "value" };
-        var errorOrPerson = Result.From(value);
+        var resultPerson = Result.From(value);
 
-        var errors = errorOrPerson.ErrorsOrEmptyList;
+        var errors = resultPerson.ErrorsOrEmptyList;
 
         errors.Should().BeEmpty();
     }
@@ -87,9 +87,9 @@ public class ResultTests
     public void CreateFromValue_WhenAccessingFirstError_ShouldReturnUnexpectedError()
     {
         IEnumerable<string> value = new[] { "value" };
-        var errorOrPerson = Result.From(value);
+        var resultPerson = Result.From(value);
 
-        var firstError = errorOrPerson.FirstError;
+        var firstError = resultPerson.FirstError;
 
         firstError.Type.Should().Be(ErrorType.Unexpected);
     }
@@ -98,29 +98,29 @@ public class ResultTests
     public void CreateFromErrorList_WhenAccessingErrors_ShouldReturnErrorList()
     {
         var errors = new List<Error> { Error.Validation("User.Name", "Name is too short") };
-        var errorOrPerson = Result<Person>.From(errors);
+        var resultPerson = Result<Person>.From(errors);
 
-        errorOrPerson.IsError.Should().BeTrue();
-        errorOrPerson.Errors.Should().ContainSingle().Which.Should().Be(errors.Single());
+        resultPerson.IsError.Should().BeTrue();
+        resultPerson.Errors.Should().ContainSingle().Which.Should().Be(errors.Single());
     }
 
     [Fact]
     public void CreateFromErrorList_WhenAccessingErrorsOrEmptyList_ShouldReturnErrorList()
     {
         var errors = new List<Error> { Error.Validation("User.Name", "Name is too short") };
-        var errorOrPerson = Result<Person>.From(errors);
+        var resultPerson = Result<Person>.From(errors);
 
-        errorOrPerson.IsError.Should().BeTrue();
-        errorOrPerson.ErrorsOrEmptyList.Should().ContainSingle().Which.Should().Be(errors.Single());
+        resultPerson.IsError.Should().BeTrue();
+        resultPerson.ErrorsOrEmptyList.Should().ContainSingle().Which.Should().Be(errors.Single());
     }
 
     [Fact]
     public void CreateFromErrorList_WhenAccessingValue_ShouldReturnDefault()
     {
         var errors = new List<Error> { Error.Validation("User.Name", "Name is too short") };
-        var errorOrPerson = Result<Person>.From(errors);
+        var resultPerson = Result<Person>.From(errors);
 
-        var value = errorOrPerson.Value;
+        var value = resultPerson.Value;
 
         value.Should().Be(default);
     }
@@ -128,20 +128,20 @@ public class ResultTests
     [Fact]
     public void ImplicitCastResult_WhenAccessingResult_ShouldReturnValue()
     {
-        var result = new Person("Hans");
+        var resultPerson = new Person("Hans");
 
-        Result<Person> errorOr = result;
+        Result<Person> result = resultPerson;
 
-        errorOr.IsError.Should().BeFalse();
-        errorOr.Value.Should().Be(result);
+        result.IsError.Should().BeFalse();
+        result.Value.Should().Be(resultPerson);
     }
 
     [Fact]
     public void ImplicitCastResult_WhenAccessingErrors_ShouldReturnUnexpectedError()
     {
-        Result<Person> errorOrPerson = new Person("Hans");
+        Result<Person> resultPerson = new Person("Hans");
 
-        var errors = errorOrPerson.Errors;
+        var errors = resultPerson.Errors;
 
         errors.Should().ContainSingle().Which.Type.Should().Be(ErrorType.Unexpected);
     }
@@ -149,9 +149,9 @@ public class ResultTests
     [Fact]
     public void ImplicitCastResult_WhenAccessingFirstError_ShouldReturnUnexpectedError()
     {
-        Result<Person> errorOrPerson = new Person("Hans");
+        Result<Person> resultPerson = new Person("Hans");
 
-        var firstError = errorOrPerson.FirstError;
+        var firstError = resultPerson.FirstError;
 
         firstError.Type.Should().Be(ErrorType.Unexpected);
     }
@@ -161,31 +161,31 @@ public class ResultTests
     {
         const int result = 4;
 
-        Result<int> errorOrInt = result;
+        Result<int> resultInt = result;
 
-        errorOrInt.IsError.Should().BeFalse();
-        errorOrInt.Value.Should().Be(result);
+        resultInt.IsError.Should().BeFalse();
+        resultInt.Value.Should().Be(result);
     }
 
     [Fact]
     public void ImplicitCastErrorOrType_WhenAccessingResult_ShouldReturnValue()
     {
-        Result<Success> errorOrSuccess = ResultType.Success;
-        Result<Created> errorOrCreated = ResultType.Created;
-        Result<Deleted> errorOrDeleted = ResultType.Deleted;
-        Result<Updated> errorOrUpdated = ResultType.Updated;
+        Result<Success> resultSuccess = ResultType.Success;
+        Result<Created> resultCreated = ResultType.Created;
+        Result<Deleted> resultDeleted = ResultType.Deleted;
+        Result<Updated> resultUpdated = ResultType.Updated;
 
-        errorOrSuccess.IsError.Should().BeFalse();
-        errorOrSuccess.Value.Should().Be(ResultType.Success);
+        resultSuccess.IsError.Should().BeFalse();
+        resultSuccess.Value.Should().Be(ResultType.Success);
 
-        errorOrCreated.IsError.Should().BeFalse();
-        errorOrCreated.Value.Should().Be(ResultType.Created);
+        resultCreated.IsError.Should().BeFalse();
+        resultCreated.Value.Should().Be(ResultType.Created);
 
-        errorOrDeleted.IsError.Should().BeFalse();
-        errorOrDeleted.Value.Should().Be(ResultType.Deleted);
+        resultDeleted.IsError.Should().BeFalse();
+        resultDeleted.Value.Should().Be(ResultType.Deleted);
 
-        errorOrUpdated.IsError.Should().BeFalse();
-        errorOrUpdated.Value.Should().Be(ResultType.Updated);
+        resultUpdated.IsError.Should().BeFalse();
+        resultUpdated.Value.Should().Be(ResultType.Updated);
     }
 
     [Fact]
@@ -193,18 +193,18 @@ public class ResultTests
     {
         var error = Error.Validation("User.Name", "Name is too short");
 
-        Result<Person> errorOrPerson = error;
+        Result<Person> resultPerson = error;
 
-        errorOrPerson.IsError.Should().BeTrue();
-        errorOrPerson.Errors.Should().ContainSingle().Which.Should().Be(error);
+        resultPerson.IsError.Should().BeTrue();
+        resultPerson.Errors.Should().ContainSingle().Which.Should().Be(error);
     }
 
     [Fact]
     public void ImplicitCastError_WhenAccessingValue_ShouldReturnDefault()
     {
-        Result<Person> errorOrPerson = Error.Validation("User.Name", "Name is too short");
+        Result<Person> resultPerson = Error.Validation("User.Name", "Name is too short");
 
-        var value = errorOrPerson.Value;
+        var value = resultPerson.Value;
 
         value.Should().Be(default);
     }
@@ -214,10 +214,10 @@ public class ResultTests
     {
         var error = Error.Validation("User.Name", "Name is too short");
 
-        Result<Person> errorOrPerson = error;
+        Result<Person> resultPerson = error;
 
-        errorOrPerson.IsError.Should().BeTrue();
-        errorOrPerson.FirstError.Should().Be(error);
+        resultPerson.IsError.Should().BeTrue();
+        resultPerson.FirstError.Should().Be(error);
     }
 
     [Fact]
@@ -229,10 +229,10 @@ public class ResultTests
             Error.Validation("User.Age", "User is too young"),
         };
 
-        Result<Person> errorOrPerson = errors;
+        Result<Person> resultPerson = errors;
 
-        errorOrPerson.IsError.Should().BeTrue();
-        errorOrPerson.Errors.Should().HaveCount(errors.Count).And.BeEquivalentTo(errors);
+        resultPerson.IsError.Should().BeTrue();
+        resultPerson.Errors.Should().HaveCount(errors.Count).And.BeEquivalentTo(errors);
     }
 
     [Fact]
@@ -244,10 +244,10 @@ public class ResultTests
             Error.Validation("User.Age", "User is too young"),
         };
 
-        Result<Person> errorOrPerson = errors;
+        Result<Person> resultPerson = errors;
 
-        errorOrPerson.IsError.Should().BeTrue();
-        errorOrPerson.Errors.Should().HaveCount(errors.Length).And.BeEquivalentTo(errors);
+        resultPerson.IsError.Should().BeTrue();
+        resultPerson.Errors.Should().HaveCount(errors.Length).And.BeEquivalentTo(errors);
     }
 
     [Fact]
@@ -259,10 +259,10 @@ public class ResultTests
             Error.Validation("User.Age", "User is too young"),
         };
 
-        Result<Person> errorOrPerson = errors;
+        Result<Person> resultPerson = errors;
 
-        errorOrPerson.IsError.Should().BeTrue();
-        errorOrPerson.FirstError.Should().Be(errors[0]);
+        resultPerson.IsError.Should().BeTrue();
+        resultPerson.FirstError.Should().Be(errors[0]);
     }
 
     [Fact]
@@ -274,9 +274,9 @@ public class ResultTests
             Error.Validation("User.Age", "User is too young"),
         };
 
-        Result<Person> errorOrPerson = errors;
+        Result<Person> resultPerson = errors;
 
-        errorOrPerson.IsError.Should().BeTrue();
-        errorOrPerson.FirstError.Should().Be(errors[0]);
+        resultPerson.IsError.Should().BeTrue();
+        resultPerson.FirstError.Should().Be(errors[0]);
     }
 }
